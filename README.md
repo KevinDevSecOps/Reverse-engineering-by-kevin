@@ -7,7 +7,18 @@
 
 ## 🧭 ¿Cómo usar este repositorio?
 
-Elige tu ruta:
+Elige tu ruta:## 🧭 ¿Cómo usar este repo?
+
+### 1. 🗺️ Ruta de Aprendizaje
+12 módulos progresivos desde C y ASM hasta técnicas reales como desempaquetado o Frida.
+👉 **[VER RUTA COMPLETA](./101-roadmap/README.md)**
+
+| Fase | Contenido | Estado |
+|------|-----------|--------|
+| 🌱 Fase 1 | Cimientos: C, ASM, arquitectura, herramientas | 🚧 En progreso |
+| 🌿 Fase 2 | Análisis Estático con Ghidra | 🔜 Pendiente |
+| 🪴 Fase 3 | Depuración con x64dbg y GDB | 🔜 Pendiente |
+| 🌳 Fase 4 | Técnicas reales: unpacking, anti-debug, hooking | 🔜 Pendiente |
 
 ### 1. 🗺️ Ruta de Aprendizaje (Nuestra Guía)
 Si empiezas desde cero, sigue los módulos diseñados en orden:

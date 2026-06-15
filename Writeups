@@ -1,0 +1,30 @@
+
+### Tu primera piedra angular: un writeup
+
+Crea ya `writeups/crackmes-easy/crackme01-easy-af.md` con un reto sencillo de [crackmes.one](https://crackmes.one/). Siguiendo tu propio `template-writeup.md`:
+
+```markdown
+# Writeup: Crackme 'Easy_AF' by autorX
+
+- **URL:** [https://crackmes.one/...](https://crackmes.one/)
+- **Plataforma:** Windows / Linux
+- **Herramientas:** Detect It Easy, Ghidra, x64dbg
+- **Técnicas:** Análisis estático básico, búsqueda de strings, breakpoints.
+- **Dificultad:** 🌱 Principiante
+
+## 1. Reconocimiento
+Le pasé DIE. Es un PE32, compilado con MinGW. Sin empaquetar. ¡Buenas noticias!
+
+## 2. Análisis Estático (Ghidra)
+Importé el binario. Busqué la string "Wrong password"...
+*(aquí captura de pantalla)*
+...y llegué a la función `FUN_140001080`. Vi una comparación (`strcmp`) con la cadena `"S3cr3t0!"`.
+**Hipótesis:** La contraseña es `S3cr3t0!`.
+
+## 3. Análisis Dinámico (x64dbg)
+Puse un breakpoint en `FUN_140001080` para confirmar.
+*(captura del depurador)*
+Observé que en `RCX` y `RDX` se cargan mis argumentos para `strcmp`. Modifiqué `RDX` para que apunte a `S3cr3t0!` y... ¡salta a "Success!"!
+
+## 4. Conclusión
+Contraseña: `S3cr3t0!`. Aprendí a validar hipótesis estáticas con depuración.

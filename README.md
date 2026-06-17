@@ -15,7 +15,7 @@ Elige tu ruta:## 🧭 ¿Cómo usar este repo?
 
 | Fase | Contenido | Estado |
 |------|-----------|--------|
-| 🌱 Fase 1 | Cimientos: C, ASM, arquitectura, herramientas | 🚧 En progreso |
+| 🌱 Fase 1 | Cimientos: C, ASM, arquitectura, herramientas | ✅ Hecho🚧 En progreso |
 | 🌿 Fase 2 | Análisis Estático con Ghidra | 🔜 Pendiente |
 | 🪴 Fase 3 | Depuración con x64dbg y GDB | 🔜 Pendiente |
 | 🌳 Fase 4 | Técnicas reales: unpacking, anti-debug, hooking | 🔜 Pendiente |

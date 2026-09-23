@@ -1,0 +1,37 @@
+## 🐉 Caso de Estudio: Denuvo Anti-Tamper
+
+Denuvo es considerado uno de los sistemas anti-tamper más complejos de la industria del videojuego. No es DRM tradicional: es una **capa de ofuscación y virtualización** que convierte el código original en un flujo de instrucciones propio (VM-based), con anti-debug, integridad de memoria y checks dinámicos.
+
+Como parte de mi formación en reversing, lo he usado como **el "jefe final"** de mi ruta de aprendizaje. Aquí documento mi enfoque, hallazgos y técnicas.
+
+### 🧠 ¿Por qué Denuvo es un gran caso de estudio?
+
+| Capa | Qué hace | Desafío de reversing |
+|:-----|:---------|:---------------------|
+| **VM-based obfuscation** | Convierte instrucciones nativas en bytecode de su propia VM | Cada instrucción es un handler, el flujo se pierde |
+| **Anti-Debug** | Detecta `ptrace`, `IsDebuggerPresent`, timing checks | Hay que parchear o emular el entorno |
+| **Integrity Checks** | Verifica que el código no se ha modificado | Cualquier parche rompe el binario |
+| **Anti-Dump** | Ofusca secciones críticas en memoria | El dump estático no sirve, hay que reconstruir en runtime |
+
+### 🛠️ Mi enfoque (Workflow)
+
+```text
+1. Reconocimiento
+   ├── Identificar versión de Denuvo (no todas son iguales)
+   ├── Localizar la sección .text protegida y los handlers de la VM
+   └── Mapear imports sospechosos (NtQueryInformationProcess, etc.)
+
+2. Análisis Dinámico
+   ├── x64dbg + plugins anti-anti-debug (ScyllaHide, TitanHide)
+   ├── Trace de la VM: log de handlers ejecutados
+   └── Captura de la tabla de despacho (dispatch table)
+
+3. Análisis Estático
+   ├── Ghidra con scripts propios para identificar handlers
+   ├── Reconstrucción del grafo de flujo original
+   └── Identificación de checks de integridad
+
+4. Reversión / Emulación
+   ├── Scripts en Python (Unicorn Engine) para ejecutar handlers aislados
+   ├── Parcheo selectivo de checks (si el objetivo es educativo)
+   └── Documentación de cada paso en Writeups/

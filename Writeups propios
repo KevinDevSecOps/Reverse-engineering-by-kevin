@@ -60,3 +60,83 @@ Writeup completo del caso 🔴 Pendiente
 · ScyllaHide — Anti-anti-debug para x64dbg
 
 ```
+## 🐉 Caso de Estudio: Denuvo Anti-Tamper
+
+Denuvo es considerado uno de los sistemas anti-tamper más complejos de la industria. No es DRM clásico: es una **capa de virtualización y ofuscación** que convierte el código original en bytecode de su propia VM, con anti-debug, integridad de memoria y checks dinámicos.
+
+Lo uso como el **"jefe final"** de mi ruta de reversing. Aquí documento mi enfoque real, con las herramientas que uso a diario.
+
+### 🧰 Mi Stack para este caso
+
+| Herramienta | Rol | Por qué |
+|:------------|:----|:--------|
+| **x64dbg** | 🎯 Dinámico principal | En Windows es insuperable: rápido, plugins, scripting, UI clara |
+| **ScyllaHide / TitanHide** | 🛡️ Anti-anti-debug | Imprescindible contra los checks de Denuvo |
+| **Ghidra** | 🔍 Estático de apoyo | Para mapear handlers y funciones fuera del runtime |
+| **Python + Unicorn** | 🧪 Emulación | Ejecutar handlers aislados sin tocar el binario real |
+| **PE-bear / CFF Explorer** | 📦 Reconocimiento | Inspección de secciones, imports, TLS callbacks |
+
+> 💡 **Nota personal**: Empecé intentando hacer todo en Ghidra, pero para Denuvo el flujo es mucho más ágil en **x64dbg**. Ghidra lo uso para entender la estructura de los handlers y documentar el flujo, no para el análisis dinámico.
+
+### 🧠 ¿Por qué Denuvo es un gran caso de estudio?
+
+| Capa | Qué hace | Desafío de reversing |
+|:-----|:---------|:---------------------|
+| **VM-based obfuscation** | Convierte instrucciones nativas en bytecode propio | Cada instrucción es un handler, el flujo se pierde |
+| **Anti-Debug** | Detecta debuggers, timing, hardware breakpoints | Hay que parchear o emular el entorno |
+| **Integrity Checks** | Verifica que el código no se ha modificado | Cualquier parche rompe el binario |
+| **Anti-Dump** | Ofusca secciones críticas en memoria | El dump estático no sirve, hay que reconstruir en runtime |
+
+### 🛠️ Mi Workflow Real (x64dbg-first)
+
+```text
+1. Reconocimiento
+   ├── PE-bear: secciones, imports, TLS callbacks, entry point real
+   ├── Identificar versión de Denuvo (no todas son iguales)
+   └── Localizar secciones protegidas y handlers sospechosos
+
+2. Setup Dinámico (x64dbg)
+   ├── Cargar con ScyllaHide activo (perfil anti-anti-debug)
+   ├── Poner breakpoints en NtQueryInformationProcess, NtSetInformationThread
+   ├── Script de logging para handlers de la VM
+   └── Trace del dispatch loop
+
+3. Análisis de la VM
+   ├── Identificar el "fetch-decode-execute" de Denuvo
+   ├── Dump de la dispatch table (tabla de handlers)
+   ├── Log de handlers ejecutados en orden
+   └── Mapear opcodes de la VM a operaciones reales
+
+4. Apoyo Estático (Ghidra)
+   ├── Importar el binario con base address del runtime
+   ├── Scripts propios para identificar patrones de handlers
+   ├── Reconstrucción del grafo de flujo original
+   └── Identificar checks de integridad y anti-debug
+
+5. Emulación y Validación
+   ├── Unicorn Engine: ejecutar handlers aislados en Python
+   ├── Validar hipótesis sin tocar el binario real
+   └── Documentar cada opcode mapeado
+🚧 Estado Actual
+
+Área Herramienta Progreso
+Identificación de handlers de la VM x64dbg + Ghidra 🟡 En curso
+Trace dinámico y dispatch loop x64dbg 🟡 En curso
+Dump de dispatch table x64dbg scripts 🟡 En curso
+Reconstrucción de flujo Ghidra 🔴 Pendiente
+Emulación de handlers Unicorn 🔴 Pendiente
+Writeup completo — 🔴 Pendiente
+
+⚠️ Nota legal y ética: Todo este trabajo se realiza con fines educativos y de investigación en seguridad, sobre binarios con licencia o en entornos controlados. No se distribuye material protegido ni se promueve el pirateo. El objetivo es entender las técnicas para defender mejor y formar a futuros reverse engineers.
+
+🔗 Recursos que estoy usando
+
+· x64dbg — Debugger principal
+· ScyllaHide — Anti-anti-debug
+· Ghidra — Análisis estático de apoyo
+· Unicorn Engine — Emulación
+· Guided Hacking — Comunidad y guías
+
+```
+
+---

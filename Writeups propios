@@ -35,3 +35,28 @@ Como parte de mi formación en reversing, lo he usado como **el "jefe final"** d
    ├── Scripts en Python (Unicorn Engine) para ejecutar handlers aislados
    ├── Parcheo selectivo de checks (si el objetivo es educativo)
    └── Documentación de cada paso en Writeups/
+📚 Lo que he aprendido (y estoy documentando)
+
+· La VM de Denuvo no es mágica: es un intérprete. Una vez identificas el fetch-decode-execute, el resto es tedioso pero mecánico.
+· El anti-debug se gana con paciencia: cada versión añade checks nuevos, pero los principios son los mismos.
+· Herramientas clave: x64dbg + ScyllaHide, Ghidra con scripts de análisis de handlers, Unicorn para emulación de fragmentos.
+· Comunidad: foros como Guided Hacking, UnknownCheats y papers académicos sobre VM-based obfuscation son oro puro.
+
+🚧 Estado Actual
+
+Área Progreso
+Identificación de handlers de la VM 🟡 En curso
+Trace dinámico con x64dbg 🟡 En curso
+Reconstrucción de flujo con Ghidra 🔴 Pendiente
+Writeup completo del caso 🔴 Pendiente
+
+⚠️ Nota legal y ética: Todo este trabajo se realiza con fines educativos y de investigación en seguridad, sobre binarios de los que tengo licencia o en entornos controlados. No se distribuye material protegido ni se promueve el pirateo. El objetivo es entender las técnicas para defender mejor y para formar a futuros reverse engineers.
+
+🔗 Recursos que estoy usando
+
+· Denuvo Analysis (Guided Hacking) — Foros y guías de la comunidad
+· VM-based Obfuscation papers — Base académica
+· Unicorn Engine — Emulación de código
+· ScyllaHide — Anti-anti-debug para x64dbg
+
+```

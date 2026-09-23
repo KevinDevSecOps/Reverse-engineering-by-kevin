@@ -17,9 +17,9 @@ Elige tu ruta:## 🧭 ¿Cómo usar este repo?
 |------|-----------|--------|
 | 🌱 Fase 1 | Cimientos: C, ASM, arquitectura, herramientas | ✅ Hecho |
 | 🌿 Fase 2 | Análisis Estático con Ghidra | 🚧 En Curso
-| 🍀Fase Writeup: Análisis de la VM de Denuvo con x64dbg + Ghidra | 💻 En Progreso |
+| 🍀Fase Writeups | Análisis de la VM de Denuvo con x64dbg + Ghidra | 💻 En Progreso |
 | 🪴 Fase 3 | Depuración con x64dbg y GDB | 🔜 Pendiente |
-| 🌳 Fase 4 | Técnicas reales: unpacking, anti-debug, hooking | 🔜 Pendiente |
+| 🌳 Fase 5 | Técnicas reales: unpacking, anti-debug, hooking | 🔜 Pendiente |
 
 ### 1. 🗺️ Ruta de Aprendizaje (Nuestra Guía)
 Si empiezas desde cero, sigue los módulos diseñados en orden:
